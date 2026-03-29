@@ -1,45 +1,45 @@
-# [Project Name: e.g., Deep RL for Optimal Trade Execution / LOB Transformer]
+# Statistical Arbitrage: PCA Factor Modeling & Mean Reversion
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-EE4C2C.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 📌 Overview
-This repository implements [brief description, e.g., a Proximal Policy Optimization (PPO) agent for optimal trade execution / a Time-Series Transformer for Limit Order Book price prediction]. 
+This repository implements a systematic statistical arbitrage strategy based on the seminal paper *"Statistical Arbitrage in the U.S. Equities Market"* by Marco Avellaneda and Jeong-Hyun Lee (2008). 
 
-The primary objective of this project is to bridge the gap between theoretical deep learning models and highly noisy, non-stationary financial data. It focuses on [key challenge, e.g., minimizing market impact and slippage / capturing micro-structure dynamics without look-ahead bias].
+Unlike traditional pairs trading (which relies on cointegration between two stocks), this project builds a "generalized pairs trading" framework. It uses Principal Component Analysis (PCA) to extract systematic market factors, isolates the idiosyncratic residuals of each equity, and models those residuals as an Ornstein-Uhlenbeck (OU) mean-reverting process to generate trading signals.
 
 ## 🏗️ System Architecture
-The pipeline is entirely object-oriented and decoupled, allowing for rapid experimentation and backtesting without data leakage.
+The pipeline is fully object-oriented and designed for highly vectorized, rolling-window backtesting using `pandas` and `numpy` to ensure computational efficiency and prevent look-ahead bias.
 
-*   **`data/`**: Ingestion and preprocessing pipelines for handling [e.g., tick-level LOB data / historical minute bars]. Includes vectorized feature engineering using `pandas` and `numpy`.
-*   **`environment/`** *(If applicable)*: A custom OpenAI `Gymnasium` environment simulating [e.g., the matching engine / market impact].
-*   **`models/`**: PyTorch implementations of the core architectures [e.g., the Transformer encoder layers / the Actor-Critic networks].
-*   **`training/`**: The training loops, loss function definitions, and validation logic (including walk-forward cross-validation).
-*   **`evaluation/`**: Out-of-sample backtesting, metric generation (Sharpe, Max Drawdown, execution shortfall), and visualization.
+*   **`data/`**: Ingestion and cleaning of historical daily price/volume data. Handles survivorship bias, corporate actions, and NaN forward-filling.
+*   **`factors/`**: The PCA pipeline. Computes the empirical correlation matrix on a rolling window and extracts the top $K$ eigenportfolios (market factors).
+*   **`models/`**: Estimates the Ornstein-Uhlenbeck (OU) process parameters. Uses an AR(1) linear regression to calculate the mean reversion speed ($\kappa$), equilibrium mean ($m$), and volatility ($\sigma$).
+*   **`signals/`**: Vectorized logic to generate the dimensionless $s$-score (z-score) and map it to Long/Short/Flat target positions.
+*   **`backtest/`**: The vectorized execution engine. Calculates portfolio PnL, transaction costs, and performance metrics.
 
-## 📊 Data Pipeline & Preprocessing
-Handling financial data requires strict temporal discipline. The preprocessing pipeline includes:
-*   **Feature Scaling:** Cross-sectional and temporal z-scoring computed *strictly* on rolling windows to prevent look-ahead bias.
-*   **Stationarity:** Transformations applied to ensure inputs are suitable for deep learning (e.g., fractional differentiation or log returns).
-*   **Target Generation:** [Explain the labels, e.g., Next 10-tick mid-price movement / Execution shortfall against the TWAP benchmark].
+## 🧮 Mathematical Framework
 
-## 🧠 Model Dynamics & Training
-*   **Architecture Details:** [e.g., 4-layer Transformer with 8 attention heads / DQN with a target network and experience replay].
-*   **Loss Function:** [e.g., Categorical Cross-Entropy for price movement / Huber Loss for value estimation].
-*   **Hardware:** Optimized for training on [e.g., a single consumer GPU (RTX 3090 / 4090)] using mixed precision (`torch.cuda.amp`).
+### 1. Factor Extraction
+Returns are decomposed into a systematic component and an idiosyncratic component:
+$$R_i = \beta_{i,1}F_1 + \beta_{i,2}F_2 + ... + \beta_{i,K}F_K + \tilde{R}_i$$
+Where $F$ are the PCA factors and $\tilde{R}_i$ is the residual return.
 
-## 📈 Results & Key Metrics
-*Summarize your out-of-sample findings here once training is complete.*
-*   **Benchmark:** Compared against [e.g., TWAP execution / Naive Momentum].
-*   **Performance:** Achieved [e.g., a 15% reduction in execution slippage / 62% directional accuracy on test set].
-*   *Insert chart here: e.g., `![Equity Curve](docs/equity_curve.png)`*
+### 2. Ornstein-Uhlenbeck Process
+The cumulative residual price path ($x_t$) is modeled as a mean-reverting stochastic process:
+$$dx_t = \kappa(m - x_t)dt + \sigma dW_t$$
+
+### 3. Signal Generation
+Trading signals are generated based on the $s$-score (distance from the equilibrium mean adjusted for volatility):
+$$s_t = \frac{x_t - m}{\sigma_{eq}}$$
+*   **Buy:** $s < -1.25$ (Asset is heavily oversold relative to factors)
+*   **Short:** $s > 1.25$ (Asset is heavily overbought relative to factors)
+*   **Close:** Reversion to $s \approx 0$
 
 ## 🚀 Quickstart & Reproduction
 
 ### 1. Installation
-Clone the repository and install the required dependencies:
+Clone the repository and install the required quantitative libraries:
 ```bash
-git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
-cd your-repo-name
+git clone [https://github.com/yourusername/stat-arb-pca.git](https://github.com/yourusername/stat-arb-pca.git)
+cd stat-arb-pca
 pip install -r requirements.txt
