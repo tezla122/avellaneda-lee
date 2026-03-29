@@ -1,0 +1,50 @@
+{
+  "tickers": {
+    "DEMO0": {
+      "first_date": "2018-04-04T00:00:00",
+      "last_date": "2019-07-15T00:00:00",
+      "sector": null,
+      "exchange": null
+    },
+    "DEMO1": {
+      "first_date": "2018-04-04T00:00:00",
+      "last_date": "2019-07-15T00:00:00",
+      "sector": null,
+      "exchange": null
+    },
+    "DEMO2": {
+      "first_date": "2018-04-04T00:00:00",
+      "last_date": "2019-07-15T00:00:00",
+      "sector": null,
+      "exchange": null
+    }
+  },
+  "yearly_tickers_with_price_data": {
+    "2018": [
+      "DEMO0",
+      "DEMO1",
+      "DEMO2"
+    ],
+    "2019": [
+      "DEMO0",
+      "DEMO1",
+      "DEMO2"
+    ]
+  },
+  "universe_documentation": "Document your universe source (e.g. point-in-time constituents). Backfilling today's index introduces survivorship bias.",
+  "data_quality": {
+    "winsorize": {
+      "enabled": true,
+      "lower_bound": -0.0190396008911974,
+      "upper_bound": 0.016059922797639913,
+      "n_clipped_lower": 2,
+      "n_clipped_upper": 2,
+      "clipped_fraction": 0.003463203463203463
+    },
+    "adv_window": 63,
+    "adv_threshold": 1.0,
+    "min_constituents_per_day": 3,
+    "calendar": "NYSE",
+    "dropped_dates_low_constituents": 63
+  }
+}

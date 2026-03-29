@@ -1,0 +1,12 @@
+{
+  "sharpe": -1.78443356222915,
+  "sortino": -0.9057341527914871,
+  "max_drawdown": -0.041267861568785924,
+  "calmar": -0.708965970258502,
+  "hit_rate": 0.015527950310559006,
+  "mean_daily_net_pnl": -0.00011562608038690717,
+  "vol_daily_net_pnl": 0.0010286217214882263,
+  "avg_daily_turnover_l1": 0.05700322326869802,
+  "annualized_turnover_l1": 14.364812263711901,
+  "execution_model": "Positions at t-1 times simple return on (t-1,t]; TC on weight changes vs drift-adjusted prior (optional)."
+}

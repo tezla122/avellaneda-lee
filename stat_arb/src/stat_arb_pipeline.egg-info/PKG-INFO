@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: stat-arb-pipeline
+Version: 0.1.0
+Summary: Avellaneda & Lee statistical arbitrage pipeline
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: pyarrow>=14.0
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: pandas-market-calendars>=4.3
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"

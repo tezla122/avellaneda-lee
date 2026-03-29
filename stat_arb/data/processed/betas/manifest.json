@@ -1,0 +1,44 @@
+{
+  "rebalances": [
+    {
+      "date": "2018-08-01",
+      "file": "betas_2018-08-01.parquet"
+    },
+    {
+      "date": "2018-10-01",
+      "file": "betas_2018-10-01.parquet"
+    },
+    {
+      "date": "2018-11-01",
+      "file": "betas_2018-11-01.parquet"
+    },
+    {
+      "date": "2018-12-03",
+      "file": "betas_2018-12-03.parquet"
+    },
+    {
+      "date": "2019-02-01",
+      "file": "betas_2019-02-01.parquet"
+    },
+    {
+      "date": "2019-03-01",
+      "file": "betas_2019-03-01.parquet"
+    },
+    {
+      "date": "2019-04-01",
+      "file": "betas_2019-04-01.parquet"
+    },
+    {
+      "date": "2019-05-01",
+      "file": "betas_2019-05-01.parquet"
+    },
+    {
+      "date": "2019-06-03",
+      "file": "betas_2019-06-03.parquet"
+    },
+    {
+      "date": "2019-07-01",
+      "file": "betas_2019-07-01.parquet"
+    }
+  ]
+}

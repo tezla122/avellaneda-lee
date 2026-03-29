@@ -1,0 +1,12 @@
+{
+  "deflated_sharpe_ratio": -2.062718795146196,
+  "dsr_meta": {
+    "T": 322,
+    "sr_daily": -0.11240874849465313,
+    "sharpe_annualized": -1.78443356222915,
+    "skew": -1.24300861051862,
+    "kurtosis_excess": 30.385324555031126,
+    "deflated_sharpe_ratio": -2.062718795146196
+  },
+  "sensitivity_rows": 2
+}

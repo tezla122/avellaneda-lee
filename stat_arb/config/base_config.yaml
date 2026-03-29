@@ -1,0 +1,62 @@
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  returns_file: data/processed/returns.parquet
+  universe_mask_file: data/processed/universe_mask.parquet
+  metadata_file: data/processed/metadata.json
+adv_window: 63
+adv_threshold: 5000000.0
+min_constituents_per_day: 100
+calendar_name: NYSE
+winsorize:
+  lower_quantile: 0.001
+  upper_quantile: 0.999
+raw_glob: "*"
+phase2:
+  W: 252
+  K: 15
+  rebal_freq: BMS
+  cond_warn_threshold: 1000.0
+  cumulative_residuals_file: data/processed/cumulative_residuals.parquet
+  pca_diagnostics_file: data/processed/pca_diagnostics.parquet
+  betas_dir: data/processed/betas
+phase3:
+  W_ou: 60
+  sigma_eq_floor: 0.0001
+  near_unit_root_threshold: 0.99
+  kappa_file: data/processed/kappa.parquet
+  m_bar_file: data/processed/m_bar.parquet
+  sigma_eq_file: data/processed/sigma_eq.parquet
+  s_scores_file: data/processed/s_scores.parquet
+  ou_diagnostics_file: data/processed/ou_diagnostics.json
+phase4:
+  s_open: 1.25
+  s_close: 0.75
+  gross_notional: 1.0
+  max_half_life_days: 30.0
+  sigma_entry_floor: 0.0001
+  raw_signals_file: data/processed/raw_signals.parquet
+  positions_file: data/processed/positions.parquet
+  signal_diagnostics_file: data/processed/signal_diagnostics.parquet
+phase5:
+  initial_aum: 1.0
+  transaction_cost_bps: 5.0
+  short_borrow_bps_annual: 0.0
+  drift_adjusted_tc: true
+  pnl_file: data/processed/pnl.parquet
+  aum_file: data/processed/aum.parquet
+  metrics_file: data/processed/metrics.json
+  attribution_file: data/processed/attribution.parquet
+phase6:
+  pnl_file: data/processed/pnl.parquet
+  dsr_file: data/processed/validation_dsr.json
+  regime_metrics_file: data/processed/regime_metrics.parquet
+  sensitivity_file: data/processed/sensitivity_results.parquet
+  vix_file: null
+  phase5_defaults:
+    initial_aum: 1.0
+    drift_adjusted_tc: true
+  sensitivity_grid:
+    s_open: [1.0, 1.25]
+    s_close: [0.5, 0.75]
+    transaction_cost_bps: [0.0, 5.0]
